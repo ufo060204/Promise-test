@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>22-42_Promise_自定義封裝_初始化結構搭建</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="./promise.js"></script>
+</head>
+<body>
+  <div class="container"></div>
+  <script>
+    // let resolveP1 = Promise.resolve('ok');
+    // let resolveP2 = Promise.resolve(new Promise((resolve, reject) => {
+    //   // resolve('成功');
+    //   reject('失敗');
+    // }));
+    // let resolveP3 = Promise.resolve(Promise.resolve('oh Yeah'))
+
+    // let pAll_1 = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve('成功_1');
+    //   }, 1000);
+    // });
+    // let pAll_2 = Promise.resolve('成功_2');
+    // let pAll_3 = Promise.resolve('成功_3');
+    // 調用 Promise.all 方法
+    // let pAll = Promise.all([pAll_1, pAll_2, pAll_3]);
+
+    // 調用 race 方法
+    // let pRace = Promise.race([pAll_1, pAll_2, pAll_3]);
+
+    // let rejectP1 = Promise.reject('no');
+
+    let p = new Promise((resolve, reject) => {
+
+      // 同步
+      // resolve('ok');
+      // reject('no');
+      // console.log(111)
+      // 拋出異常
+      // throw '拋出的 error';
+
+      // 非同步
+      setTimeout(() => {
+        // resolve('ok');
+        reject('no');
+        // throw '拋出的 error';
+
+        /* 
+        備註：
+        執行不是在 then 方法中 而是在 function resolve() 或 function rejected() 裡面, 先在 then() 保存狀態, 在改變狀態之後才能執行回調
+        */
+      }, 1000);
+    });
+
+    p.then(value => {
+      // console.log(222)
+      console.log(value);
+    }, reason => {
+      // console.log(444)
+      console.log(reason);
+    });
+    // console.log(333)
+
+    // console.log(p);
+
+    // 實例化對象
+    /* 
+    let res = p.then(value => {
+      console.log(value);
+      // return 'hello promise';
+      // throw '拋出的 error';
+      // return new Promise((resolve, reject) => {
+      //   // resolve('success');
+      //   // reject('fail');
+      //   // 拋出異常
+      //   // throw '拋出的 fail';
+      // });
+    }, reason => {
+      console.warn(reason);
+      // throw '拋出的 error';
+    }); 
+   */
+
+    // 異常穿透，值傳遞(不寫參數)
+    /* 
+    p.then()
+    .then(value => {
+      // throw '為了異常穿透拋出的 error';
+      console.log('222');
+    }).then(value => { 
+      console.log('333');
+    }).catch(reason => {
+      console.warn(reason);
+    });
+     */
+
+    // catch 方法
+    /* 
+    let catchRes = p.catch(reason => {
+      console.warn(reason);
+    });
+     */
+
+    // 多次調用 then 方法的實現
+    /*
+    p.then(value => {
+      alert(value);
+    }, reason => {
+      alert(reason);
+    });
+    p.then(value => {
+      alert(value);
+    }, reason => {
+      alert(reason);
+    }); 
+    */
+
+
+    // console.log('res', res);
+    // console.log('catchRes', catchRes);
+    // console.log(p);
+
+    // console.log('resolveP1', resolveP1);
+    // console.log('resolveP2', resolveP2);
+    // console.log('resolveP3', resolveP3);
+
+    // console.log('pAll', pAll);
+
+    // console.log('pRace', pRace);
+
+    // console.log('rejectP1', rejectP1);
+
+    /* 
+    備註：
+    原生的 throw, [[Prototype]] 雙[[]] 表示內部屬性，不是我們可以透過 js 修改的
+    Promise {<rejected>: '拋出的 error'}
+      [[Prototype]]: Promise
+      [[PromiseState]]: "rejected"
+      [[PromiseResult]]: "拋出的 error"
+    */
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
